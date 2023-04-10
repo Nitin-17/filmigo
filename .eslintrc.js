@@ -33,5 +33,16 @@ module.exports = {
     "no-sparse-arrays": 0,
     "no-array-index-key": 0,
     camelcase: 0,
+    "comma-dangle": "off",
+    quotes: ["error", "double", { allowTemplateLiterals: true }],
+    "no-unused-vars": "off",
+    // "react/function-component-definition": ["error", "never"],
+    "react/function-component-definition": [
+      "error",
+      {
+        namedComponents: ["function-declaration", "arrow-function"],
+        // unnamedComponents: ["function-declaration", "arrow-function"],
+      },
+    ],
   },
 };

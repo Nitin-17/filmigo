@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useTheme } from "@mui/styles";
 
 import lightLogo from "../../assets/images/filmigo1bg2.png";
-import darkLogo from "../../assets/images/darkLogo.png";
+import darkLogo from "../../assets/images/filmigo1bg2dark.png";
 import genreIcons from "../../assets/genres";
 
 import useStyles from "./styles";
@@ -27,11 +27,14 @@ const Sidebar = ({ setMobileOpen }) => {
   const classes = useStyles();
   const { data, isFetching } = useGetGenresQuery();
   const dispatch = useDispatch();
-
   // To Get a specific slice data and not the other slice
   const { genreIdOrCategoryName } = useSelector(
     (state) => state.currentGenreOrCategory
   );
+
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [genreIdOrCategoryName]);
 
   const categories = [
     { label: "Popular", value: "popular" },

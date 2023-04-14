@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   AppBar,
   IconButton,
@@ -23,6 +23,7 @@ import Sidebar from "../Sidebar/Sidebar";
 import Search from "../Search/Search";
 import { fetchToken, moviesApi, createSessionId } from "../../utils";
 import { setUser, userSelector } from "../../features/auth";
+import { ColorModeContext } from "../../utils/ToggleColorMode";
 
 const Navbar = () => {
   const { isAuthenticated, user } = useSelector(userSelector);
@@ -34,18 +35,20 @@ const Navbar = () => {
   const token = localStorage.getItem("request_token");
   const sessionIdLocal = localStorage.getItem("session_id");
 
+  const colorMode = useContext(ColorModeContext);
+
   useEffect(() => {
     const logInUser = async () => {
       if (token) {
         if (sessionIdLocal) {
           const { data: userData } = await moviesApi.get(
-            `/account/session_id=${sessionIdLocal}`
+            `/account?session_id=${sessionIdLocal}`
           );
           dispatch(setUser(userData));
         } else {
           const sessionId = await createSessionId();
           const { data: userData } = await moviesApi.get(
-            `/account/session_id=${sessionId}`
+            `/account?session_id=${sessionId}`
           );
 
           dispatch(setUser(userData));
@@ -55,6 +58,8 @@ const Navbar = () => {
 
     logInUser();
   }, [token]);
+
+  console.log("Authentication", isAuthenticated);
 
   return (
     <>
@@ -71,10 +76,14 @@ const Navbar = () => {
               <Menu />
             </IconButton>
           )}
-          <IconButton color="inherit" sx={{ ml: 1 }} onClick={() => {}}>
+          <IconButton
+            color="inherit"
+            sx={{ ml: 1 }}
+            // eslint-disable-next-line react/destructuring-assignment
+            onClick={colorMode.toggleColorMode}
+          >
             {theme.palette.mode === "dark" ? <Brightness7 /> : <Brightness4 />}
           </IconButton>
-
           {!isMobile && <Search />}
 
           <div>
@@ -86,7 +95,7 @@ const Navbar = () => {
               <Button
                 color="inherit"
                 component={Link}
-                to="/profile/:id"
+                to={`/profile/${user.id}`}
                 className={classes.linkButton}
                 onClick={() => {}}
               >
@@ -94,7 +103,7 @@ const Navbar = () => {
                 <Avatar
                   style={{ width: 30, height: 30 }}
                   alt="Profile"
-                  src="https://static.vecteezy.com/system/resources/previews/002/002/403/original/man-with-beard-avatar-character-isolated-icon-free-vector.jpg"
+                  src={`https://www.themoviedb.org/t/p/w64_and_h64_face${user?.avatar?.tmdb?.avatar_path}`}
                 />
               </Button>
             )}

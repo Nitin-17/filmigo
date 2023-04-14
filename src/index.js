@@ -8,16 +8,16 @@ import { Provider } from "react-redux";
 
 import App from "./components/App";
 import store from "./app/store";
-
-const theme = createTheme({});
+import "./index.css";
+import ToggleColorModeProvide from "./utils/ToggleColorMode";
 
 ReactDOM.render(
   <Provider store={store}>
-    <ThemeProvider theme={theme}>
+    <ToggleColorModeProvide>
       <BrowserRouter>
         <App />
       </BrowserRouter>
-    </ThemeProvider>
+    </ToggleColorModeProvide>
   </Provider>,
   document.getElementById("root")
 );

@@ -19,7 +19,7 @@ const Movie = ({ movie, i }) => {
                 : "https://www.fillmurray.com/200/300"
             }
           />
-          <Typography className={classes.title} variant="h5">
+          <Typography className={classes.title} variant="h6">
             {movie.title}
           </Typography>
           <Tooltip disableTouchListener title={`${movie.vote_average}/10`}>

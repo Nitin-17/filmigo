@@ -2,6 +2,7 @@
 import React, { useRef } from "react";
 import { CssBaseline } from "@mui/material";
 import { Route, Routes } from "react-router-dom";
+import "../index.css";
 
 import useStyles from "./styles";
 

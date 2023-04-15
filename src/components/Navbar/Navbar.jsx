@@ -119,7 +119,7 @@ const Navbar = () => {
           {isMobile ? (
             <Drawer
               variant="temporary"
-              anchor="right"
+              anchor="left"
               open={mobileOpen}
               onClose={() => setMobileOpen((prevMobileOpen) => !prevMobileOpen)}
               className={classes.drawerbackground}
@@ -133,6 +133,7 @@ const Navbar = () => {
               classes={{ paper: classes.drawerpaper }}
               variant="permanent"
               open
+              PaperProps={{ style: { width: "14%" } }}
             >
               <Sidebar setMobileOpen={setMobileOpen} />
             </Drawer>
